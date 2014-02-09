@@ -5,6 +5,39 @@
 #include <QMutex>
 #include <QObject>
 
+#define LOG(Type, QStringMessage) QtLog::Type(QStringLiteral(__FUNCTION__) + (QStringMessage));
+
+#ifndef NOLOGERROR
+#define LOG_ERROR(QStringMessage) LOG(error, QStringMessage);
+#else
+#define qt_noop();
+#endif
+
+#ifndef NOLOGWARN
+#define LOG_WARN(QStringMessage) LOG(warn, QStringMessage);
+#else
+#define qt_noop();
+#endif
+
+#ifndef NOLOGINFO
+#define LOG_INFO(QStringMessage) LOG(info, QStringMessage);
+#else
+#define qt_noop();
+#endif
+
+#ifndef NOLOGDEBUG
+#define LOG_DEBUG(QStringMessage) LOG(debug, QStringMessage);
+#else
+#define qt_noop();
+#endif
+
+#ifndef NOLOGTRACE
+#define LOG_TRACE(QStringMessage) LOG(trace, QStringMessage);
+#else
+#define qt_noop();
+#endif
+
+
 class QTLOGSHARED_EXPORT QtLog : public QObject
 {
     Q_OBJECT
