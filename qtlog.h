@@ -5,7 +5,7 @@
 #include <QMutex>
 #include <QObject>
 
-#define LOG(Type, QStringMessage) QtLog::Type(QStringLiteral(__FUNCTION__) + (QStringMessage));
+#define LOG(Type, QStringMessage) QtLog::Type((__FUNCTION__) + (QStringMessage));
 
 #ifndef NOLOGERROR
 #define LOG_ERROR(QStringMessage) LOG(error, QStringMessage);
@@ -36,7 +36,6 @@
 #else
 #define qt_noop();
 #endif
-
 
 class QTLOGSHARED_EXPORT QtLog : public QObject
 {
