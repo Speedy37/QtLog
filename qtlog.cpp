@@ -1,7 +1,7 @@
 #include "qtlog.h"
 #include <iostream>
 
-QtLog * QtLog::m_instance = NULL;
+QtLog * QtLog::m_instance = nullptr;
 QtLog::LogLevel QtLog::m_level = QtLog::Info;
 QtLog::LogOutput QtLog::m_output = QtLog::StandardError;
 

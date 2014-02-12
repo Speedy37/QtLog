@@ -43,7 +43,7 @@ class QTLOGSHARED_EXPORT QtLog : public QObject
 public:
     static QtLog * instance(QObject * parent = 0)
     {
-        if(m_instance == NULL)
+        if(m_instance == nullptr)
             m_instance = new QtLog(parent);
         return m_instance;
     }
