@@ -5,34 +5,34 @@
 #include <QMutex>
 #include <QObject>
 
-#define LOG(Type, QStringMessage) QtLog::Type((__FUNCTION__) + (QStringMessage));
+#define LOG(Type, QStringMessage) QtLog::log(QtLog::Type, QStringMessage, Q_FUNC_INFO);
 
 #ifndef NOLOGERROR
-#define LOG_ERROR(QStringMessage) LOG(error, QStringMessage);
+#define LOG_ERROR(QStringMessage) LOG(Error, QStringMessage);
 #else
 #define qt_noop();
 #endif
 
 #ifndef NOLOGWARN
-#define LOG_WARN(QStringMessage) LOG(warn, QStringMessage);
+#define LOG_WARN(QStringMessage) LOG(Warn, QStringMessage);
 #else
 #define qt_noop();
 #endif
 
 #ifndef NOLOGINFO
-#define LOG_INFO(QStringMessage) LOG(info, QStringMessage);
+#define LOG_INFO(QStringMessage) LOG(Info, QStringMessage);
 #else
 #define qt_noop();
 #endif
 
 #ifndef NOLOGDEBUG
-#define LOG_DEBUG(QStringMessage) LOG(debug, QStringMessage);
+#define LOG_DEBUG(QStringMessage) LOG(Debug, QStringMessage);
 #else
 #define qt_noop();
 #endif
 
 #ifndef NOLOGTRACE
-#define LOG_TRACE(QStringMessage) LOG(trace, QStringMessage);
+#define LOG_TRACE(QStringMessage) LOG(Trace, QStringMessage);
 #else
 #define qt_noop();
 #endif
@@ -50,7 +50,7 @@ public:
 
     enum LogOutput
     {
-        Nowhere,
+        NoOutput,
         StandardOutput,
         StandardError
     };
@@ -73,6 +73,7 @@ public:
     static void info(const QString & msg) { slog(Info, msg); }
     static void debug(const QString & msg) { slog(Debug, msg); }
     static void trace(const QString & msg) { slog(Trace, msg); }
+    static void log(LogLevel type, const QString & msg, const char * function);
 
     static bool isFatalEnabled() { return m_level >= Fatal; }
     static bool isWarnEnabled() { return m_level >= Error; }

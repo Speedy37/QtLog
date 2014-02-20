@@ -31,6 +31,22 @@ QString QtLog::type(int t)
     return QString();
 }
 
+#include <QRegExp>
+void QtLog::log(QtLog::LogLevel type, const QString &msg, const char *function)
+{
+    if(level() >= type)
+    {
+        QString functionStr(function);
+        int end = functionStr.indexOf('(');
+        if(end > 0)
+        {
+            int start = functionStr.lastIndexOf(QRegExp("[^A-Za-z0-9_:]"), end - 1) + 1;
+            functionStr = functionStr.mid(start, end - start);
+        }
+        instance()->log(type, QStringLiteral("%1 : %2").arg(functionStr).arg(msg));
+    }
+}
+
 void QtLog::slog(QtLog::LogLevel type, const QString &msg)
 {
     if(level() >= type)
@@ -45,10 +61,10 @@ void QtLog::log(LogLevel type, const QString &msg)
     switch(output())
     {
     case StandardOutput:
-        std::cout << msg.toStdString() << std::endl;
+        std::cout << this->type(type).leftJustified(6).toStdString() << " : " << msg.toStdString() << std::endl;
         break;
     case StandardError:
-        std::cerr << msg.toStdString() << std::endl;
+        std::cerr << this->type(type).leftJustified(6).toStdString() << " : " << msg.toStdString() << std::endl;
         break;
     default:
         break;

@@ -9,6 +9,8 @@ QT       -= gui
 TARGET = QtLog
 TEMPLATE = lib
 
+CONFIG += c++11
+
 DEFINES += QTLOG_LIBRARY
 
 SOURCES += qtlog.cpp
